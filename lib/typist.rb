@@ -2,4 +2,5 @@
 # location for high-level functions.
 module Typist
   autoload :Error, 'typist/error'
+  autoload :Func, 'typist/func'
 end
