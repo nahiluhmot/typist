@@ -20,10 +20,6 @@ describe Typist::Func do
           @test_var = 15
         end
       }
-
-      it '`#instance_eval`s the block' do
-        subject.instance_variable_get(:@test_var).should == 15
-      end
     end
   end
 

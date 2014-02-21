@@ -1,13 +1,13 @@
 # This class defines the `func` DSL.
 class Typist::Func
-  attr_reader :name, :matches
+  attr_reader :name, :matches, :block
 
   # Create a new function with the given name (String/Symbol). If a block is
   # given, it will be evaluated in the context of the new instance.
   def initialize(name, &block)
     @name = name
     @matches = {}
-    instance_eval(&block) unless block.nil?
+    @block = block
   end
 
   # Pattern match against the given class.
@@ -18,6 +18,7 @@ class Typist::Func
   # Given a module define this function, plus the pattern matches for all of its
   # subclasses.
   def define!(context)
+    instance_eval(&block) unless block.nil?
     define_base(context)
     matches.each { |klass, block| define_match(context, klass, &block) }
     context
