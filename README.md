@@ -1,5 +1,9 @@
 # typist
 
+[![Gem Version](https://badge.fury.io/rb/typist.png)](http://badge.fury.io/rb/typist)
+[![Build Status](https://travis-ci.org/nahiluhmot/typist.png?branch=master)](https://travis-ci.org/nahiluhmot/typist)
+[![Code Climate](https://codeclimate.com/github/nahiluhmot/typist.png)](https://codeclimate.com/github/nahiluhmot/typist)
+
 `typist` is a gem that allows you to define Algebraic Data Types (ADTs) in Ruby.
 For a tutorial on ADTs, I recommend [Learn You a Haskell's tutorial](http://learnyouahaskell.com/making-our-own-types-and-typeclasses).
 
