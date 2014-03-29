@@ -114,7 +114,7 @@ Example usage:
 
 ```ruby
 leaf = Tree.leaf
-node = Tree.node(:value => 'a', :left => Tree.leaf, right => Tree.leaf)
+node = Tree.node(:value => 'a', :left => Tree.leaf, :right => Tree.leaf)
 
 leaf.contains?('a')
 # => false
