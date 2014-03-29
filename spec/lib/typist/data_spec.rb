@@ -6,15 +6,15 @@ describe Typist::Data do
       subject { described_class.new(:Test) }
 
       it 'sets the @name' do
-        subject.name.should == :Test
+        expect(subject.name).to eq(:Test)
       end
 
       it 'sets the @constructors to []' do
-        subject.constructors.should be_empty
+        expect(subject.constructors).to be_empty
       end
 
       it 'sets the @funcs to []' do
-        subject.funcs.should be_empty
+        expect(subject.funcs).to be_empty
       end
     end
 
@@ -34,7 +34,7 @@ describe Typist::Data do
       expect { subject.constructor(:Leaf) }
         .to change { subject.constructors.length }.by(1)
 
-      subject.constructors.should be_all { |constructor|
+      expect(subject.constructors).to be_all { |constructor|
         constructor.is_a?(Typist::Constructor)
       }
     end
@@ -47,7 +47,7 @@ describe Typist::Data do
       expect { subject.func(:empty) }
         .to change { subject.funcs.length }.by(1)
 
-      subject.funcs.should be_all { |funcs|
+      expect(subject.funcs).to be_all { |funcs|
         funcs.is_a?(Typist::Func)
       }
     end
@@ -57,7 +57,7 @@ describe Typist::Data do
     subject { described_class.new(:Set) }
 
     it 'returns a module' do
-      subject.get_module.should be_a(Module)
+      expect(subject.get_module).to be_a(Module)
     end
   end
 
@@ -116,29 +116,29 @@ describe Typist::Data do
     }
 
     it 'defines convenience methods' do
-      Tree.should respond_to(:node)
-      Tree.should respond_to(:leaf)
+      expect(Tree).to respond_to(:node)
+      expect(Tree).to respond_to(:leaf)
     end
 
     it 'defines each constructor' do
-      Tree::Node.should include(Tree)
-      Tree::Leaf.should include(Tree)
+      expect(Tree::Node).to include(Tree)
+      expect(Tree::Leaf).to include(Tree)
 
-      node.value.should == 4
-      node.left.should == Tree.leaf
-      node.right.should == Tree.leaf
+      expect(node.value).to eq(4)
+      expect(node.left).to eq(Tree.leaf)
+      expect(node.right).to eq(Tree.leaf)
     end
 
     it 'defines functions on the constructors' do
-      leaf.should be_empty
-      node.should_not be_empty
+      expect(leaf).to be_empty
+      expect(node).to_not be_empty
 
-      leaf.contains?(4).should be_false
-      node.contains?(4).should be_true
-      node.contains?(5).should be_false
+      expect(leaf.contains?(4)).to be_false
+      expect(node.contains?(4)).to be_true
+      expect(node.contains?(5)).to be_false
 
-      leaf.size.should == 0
-      node.size.should == 1
+      expect(leaf.size).to eq(0)
+      expect(node.size).to eq(1)
     end
   end
 end

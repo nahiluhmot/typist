@@ -1,5 +1,11 @@
 $LOAD_PATH.unshift(File.join(File.dirname(__FILE__), '..', 'lib'))
 
+# Submit metrics to code climate.
+unless ENV['CODECLIMATE_REPO_TOKEN'].nil?
+  require 'codeclimate-test-reporter'
+  CodeClimate::TestReporter.start
+end
+
 require 'rspec'
 require 'typist'
 

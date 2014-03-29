@@ -6,11 +6,11 @@ describe Typist::Func do
       subject { described_class.new(:a_function) }
 
       it 'sets the @name instance variable to the first argument' do
-        subject.name.should == :a_function
+        expect(subject.name).to eq(:a_function)
       end
 
       it 'has no matches intially' do
-        subject.matches.should be_empty
+        expect(subject.matches).to be_empty
       end
     end
 
@@ -29,7 +29,7 @@ describe Typist::Func do
     before { subject.match(Fixnum) { :it_works } }
 
     it 'adds that to the @matches hash' do
-      subject.matches[Fixnum].call.should == :it_works
+      expect(subject.matches[Fixnum].call).to eq(:it_works)
     end
   end
 
@@ -75,7 +75,7 @@ describe Typist::Func do
 
       context 'when a subclass does match against the function' do
         it 'evaluates its match' do
-          Matches.new.alpha.should == 'qt3.14'
+          expect(Matches.new.alpha).to eq('qt3.14')
         end
       end
     end

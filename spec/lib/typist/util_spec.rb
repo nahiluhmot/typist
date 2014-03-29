@@ -13,7 +13,7 @@ describe Typist::Util do
     }
 
     it 'converts CamelCase Strings to snake_case' do
-      hash.each { |camel, snake| subject.snakeify(camel).should == snake }
+      expect(hash).to be_all { |camel, snake| subject.snakeify(camel) == snake }
     end
   end
 end

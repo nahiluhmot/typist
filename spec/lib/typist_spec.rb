@@ -1,8 +1,6 @@
 require 'spec_helper'
 
 describe Typist do
-  it { should be_a Module }
-
   describe '#data' do
     before do
       extend Typist
@@ -19,13 +17,13 @@ describe Typist do
     end
 
     it 'defines a data type' do
-      Boolean.should be_a Module
+      expect(Boolean).to be_a(Module)
 
-      Boolean.false.should be_a Boolean::False
-      Boolean.true.should be_a Boolean::True
+      expect(Boolean.false).to be_a(Boolean::False)
+      expect(Boolean.true).to be_a(Boolean::True)
 
-      Boolean.false.to_i.should == 0
-      Boolean.true.to_i.should == 1
+      expect(Boolean.false.to_i).to eq(0)
+      expect(Boolean.true.to_i).to eq(1)
     end
   end
 end
