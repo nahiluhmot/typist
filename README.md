@@ -77,7 +77,7 @@ The arguments that come after the constructor name are the instance variables --
 To create a new Leaf, run `Tree.leaf`.
 To create a new Node, run `Tree.node(:value => val, :right => Tree.leaf, :left => Tree.leaf)`.
 
-Finally, the DSL allows the user to define and pattern match in functions.
+The DSL also allows the user to define and pattern match in functions.
 The `func` method in the context of a data type declares a new function.
 For example:
 
@@ -110,11 +110,47 @@ end
 ```
 
 This defines `#contains?` method on `Tree::Node` and `Tree::Leaf`.
+
+Finally, you can define "class methods" upon the data type using the `data_func` function.
+For example:
+
+```ruby
+module Test
+  extend Typist
+
+  data :Tree do
+    constructor :Leaf
+    constructor :Node, :value, :left, :right
+
+    data_func :singleton do |value|
+      Tree.node(:value => value, :left => Tree.leaf, :right => Tree.leaf)
+    end
+
+    func :contains? do
+      match Tree::Leaf do |element|
+        false
+      end
+
+      match Tree::Node do |element|
+        case value <=> element
+        when -1
+          left.contains?(element)
+        when 1
+          right.contains?(element)
+        else
+          true
+        end
+      end
+    end
+  end
+end
+```
+
 Example usage:
 
 ```ruby
-leaf = Tree.leaf
-node = Tree.node(:value => 'a', :left => Tree.leaf, :right => Tree.leaf)
+leaf = Test::Tree.leaf
+node = Test::Tree.singleton('a')
 
 leaf.contains?('a')
 # => false
