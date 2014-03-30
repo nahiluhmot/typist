@@ -37,9 +37,12 @@ class Typist::Data
     get_module.tap do |context|
       mod.const_set(name, context)
       instance_eval(&block) unless block.nil?
-      constructors.each { |constructor| constructor.define!(context) }
-      funcs.each { |func| func.define!(context) }
-      data_funcs.each { |func| func.define!(context) }
+      dsl_attributes.each { |attr| attr.define!(context) }
     end
   end
+
+  def dsl_attributes
+    constructors + funcs + data_funcs
+  end
+  private :dsl_attributes
 end
