@@ -43,12 +43,25 @@ describe Typist::Data do
   describe '#func' do
     subject { described_class.new(:Trie) }
 
-    it 'adds a constructor' do
+    it 'adds a func' do
       expect { subject.func(:empty) }
         .to change { subject.funcs.length }.by(1)
 
-      expect(subject.funcs).to be_all { |funcs|
-        funcs.is_a?(Typist::Func)
+      expect(subject.funcs).to be_all { |func|
+        func.is_a?(Typist::Func)
+      }
+    end
+  end
+
+  describe '#data_func' do
+    subject { described_class.new(:SomeTree) }
+
+    it 'adds a data func' do
+      expect { subject.data_func(:test) { } }
+        .to change { subject.data_funcs.length }.by(1)
+
+      expect(subject.data_funcs).to be_all { |data_func|
+        data_func.is_a?(Typist::DataFunc)
       }
     end
   end
@@ -66,6 +79,10 @@ describe Typist::Data do
       defined?(Tree) ? Tree : Typist::Data.new(:Tree) do
         constructor :Leaf
         constructor :Node, :value, :left, :right
+
+        data_func :singleton do |value|
+          Tree.node(:value => value, :left => Tree.leaf, :right => Tree.leaf)
+        end
 
         func :empty? do
           match(Tree::Leaf) { true }
@@ -121,12 +138,17 @@ describe Typist::Data do
     end
 
     it 'defines each constructor' do
-      expect(Tree::Node).to include(Tree)
-      expect(Tree::Leaf).to include(Tree)
+      expect(Tree::Node.ancestors).to include(Tree)
+      expect(Tree::Leaf.ancestors).to include(Tree)
 
       expect(node.value).to eq(4)
       expect(node.left).to eq(Tree.leaf)
       expect(node.right).to eq(Tree.leaf)
+    end
+
+    it 'defines each data function' do
+      expect(Tree.singleton(1))
+        .to eq(Tree.node(:value => 1, :left => Tree.leaf, :right => Tree.leaf))
     end
 
     it 'defines functions on the constructors' do

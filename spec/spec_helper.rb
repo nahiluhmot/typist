@@ -6,6 +6,7 @@ unless ENV['CODECLIMATE_REPO_TOKEN'].nil?
   CodeClimate::TestReporter.start
 end
 
+require 'pry'
 require 'rspec'
 require 'typist'
 

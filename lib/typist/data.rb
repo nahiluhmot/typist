@@ -1,6 +1,6 @@
 # Instances of this class may be included like a module.
 class Typist::Data
-  attr_reader :name, :constructors, :funcs, :block
+  attr_reader :name, :constructors, :funcs, :data_funcs, :block
 
   # Create a new data type with the given name. The block will be evaluated in
   # the context of the new instance.
@@ -8,6 +8,7 @@ class Typist::Data
     @name = name
     @constructors = []
     @funcs = []
+    @data_funcs = []
     @block = block
   end
 
@@ -19,6 +20,11 @@ class Typist::Data
   # Define a function which may pattern-matched against
   def func(*args, &block)
     funcs << Typist::Func.new(*args, &block)
+  end
+
+  # Define a function whose receiver is the data type.
+  def data_func(*args, &block)
+    data_funcs << Typist::DataFunc.new(*args, &block)
   end
 
   # Get the module that is defined.
@@ -33,6 +39,7 @@ class Typist::Data
       instance_eval(&block) unless block.nil?
       constructors.each { |constructor| constructor.define!(context) }
       funcs.each { |func| func.define!(context) }
+      data_funcs.each { |func| func.define!(context) }
     end
   end
 end

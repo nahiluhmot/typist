@@ -3,6 +3,7 @@
 module Typist
   require 'typist/constructor'
   require 'typist/data'
+  require 'typist/data_func'
   require 'typist/error'
   require 'typist/func'
   require 'typist/util'

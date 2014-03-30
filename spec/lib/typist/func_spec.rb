@@ -34,7 +34,6 @@ describe Typist::Func do
   end
 
   describe '#define!' do
-
     context 'when an invalid class is matched against' do
       subject {
         module BaseModule; end
